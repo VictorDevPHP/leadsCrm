@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab04628ac9994c0f42682cfafc804953",
+    "content-hash": "5c8342282f79fbde9bdb7fa11a93fbee",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -604,6 +604,52 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "facebook/php-business-sdk",
+            "version": "v17.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/facebook-php-business-sdk.git",
+                "reference": "a5b073b24cc6b2002a3a971ef01425a5eb76c7fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/facebook-php-business-sdk/zipball/a5b073b24cc6b2002a3a971ef01425a5eb76c7fa",
+                "reference": "a5b073b24cc6b2002a3a971ef01425a5eb76c7fa",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5 || ^7.0",
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.3.3",
+                "phpunit/phpunit": "~9",
+                "symfony/finder": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FacebookAds\\": "src/FacebookAds/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "PHP SDK for Facebook Business",
+            "homepage": "https://developers.facebook.com/",
+            "keywords": [
+                "ads",
+                "business",
+                "facebook",
+                "instagram",
+                "page",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/facebook/facebook-php-business-sdk/issues",
+                "source": "https://github.com/facebook/facebook-php-business-sdk/tree/v17.0.0"
+            },
+            "time": "2023-05-30T21:40:31+00:00"
         },
         {
             "name": "fruitcake/php-cors",
