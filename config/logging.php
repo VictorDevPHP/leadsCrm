@@ -126,9 +126,9 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-        'log-email' => [
+        'log-whatsapp' => [
             'driver' => 'single',
-            'path' => storage_path('logs/log-email.log'),
+            'path' => storage_path('logs/log-whatsapp.log'),
             'level' => 'debug',
         ],
     ],

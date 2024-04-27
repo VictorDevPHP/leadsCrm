@@ -27,7 +27,7 @@ class RelatorioEmail extends Mailable
         $this->data_inicio = $data_inicio;
         $this->data_fim = $data_fim;
         $this->spend = $spend;
-        $this->data = [
+        $this->aiArray = [
             'impressoes' => $impressoes,
             'conversions' => $conversions,
             'data_inicio' => $data_inicio,
@@ -38,7 +38,7 @@ class RelatorioEmail extends Mailable
 
     public function build()
     {
-        // $resumoMarkdown = $this->AiFast($this->data);
+        // $resumoMarkdown = $this->AiFast($this->aiArray);
         // $converter = new CommonMarkConverter();
         // $resumoHtml = $converter->convertToHtml($resumoMarkdown);
         return $this->view('livewire.emails.sendemail')->with([
