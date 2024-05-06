@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\RelatorioEmail;
 use App\Models\Account;
+use App\Models\Anuncio;
 use App\Models\Customer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -99,10 +100,22 @@ class SendEmail extends Command
                             $texto_adicional .= "! 🚀✨" . "\n\n";
                             $texto_whatsapp .= $texto_adicional;
                         }
-
+                        
                     } else {
                         Log::channel('log-whatsapp')->info('Data[] para o cliente' . $customer['name'] . ' ID:' . $id_meta['id_meta']);
                     }
+                    $insightsDB = Anuncio::where('id_meta', $id_meta['id_meta'])->value('insights');
+                    $insightsDB[now()->format('Y/m/d')] = $insights;
+                    $anuncio = Anuncio::updateOrCreate(
+                        [
+                            'id_meta' => $id_meta['id_meta'],
+                            'id_customer' => $customer['id'],
+                        ],
+                        [
+                            'insights' => $insightsDB
+                        ]
+
+                    );
                     $flag++;
                 }
             }
@@ -126,12 +139,12 @@ class SendEmail extends Command
         $ad_account_id = $id_meta;
         Api::init(null, null, env('META_ADS_TOKEN'));
         $fields = [
+            AdsInsightsFields::ACCOUNT_NAME,
             AdsInsightsFields::IMPRESSIONS,
             AdsInsightsFields::SPEND,
             AdsInsightsFields::ACTIONS,
             AdsInsightsFields::DATE_START,
             AdsInsightsFields::DATE_STOP,
-            AdsInsightsFields::ACCOUNT_NAME
         ];
         $params = [
             'date_preset' => 'yesterday',
