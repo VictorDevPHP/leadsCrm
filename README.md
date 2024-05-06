@@ -1,66 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SendEmail.php
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este arquivo contém a definição de um comando de console Laravel para enviar e-mails e mensagens WhatsApp com relatórios de anúncios do Meta Ads para clientes.
 
-## About Laravel
+## Comando de Console
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Nome e Assinatura
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Nome**: `send:email`
+- **Assinatura**: `$signature = 'send:email';`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Descrição
 
-## Learning Laravel
+Este comando envia relatórios de desempenho de anúncios do Meta Ads via e-mail e WhatsApp para os clientes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Execução
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+O método `handle()` é executado quando o comando é chamado.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Método `handle()`
 
-## Laravel Sponsors
+Este método é responsável por iterar sobre todos os clientes e enviar os relatórios.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Parâmetros
 
-### Premium Partners
+- Nenhum.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Funcionalidades
 
-## Contributing
+1. **Obtenção de Clientes**: Obtém todos os clientes da base de dados.
+2. **Iteração de Clientes**: Itera sobre cada cliente para enviar relatórios individualmente.
+3. **Geração de Mensagem WhatsApp**: Gera mensagens personalizadas com os resultados dos anúncios.
+4. **Envio de Mensagem WhatsApp**: Envia as mensagens WhatsApp usando a API do Meta WPP.
+5. **Atualização de Dados do Anúncio**: Atualiza ou cria registros de dados de desempenho do anúncio na base de dados.
+6. **Registro de Logs**: Registra informações sobre o envio das mensagens.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Método `getAdsInsights($id_meta)`
 
-## Code of Conduct
+Este método é responsável por obter os insights dos anúncios do Meta Ads.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Parâmetros
 
-## Security Vulnerabilities
+- `$id_meta`: ID da conta do Meta Ads.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Funcionalidades
 
-## License
+1. **Inicialização da API do Meta Ads**: Inicializa a API do Meta Ads.
+2. **Definição de Campos e Parâmetros**: Define os campos e parâmetros para obter insights dos anúncios.
+3. **Obtenção de Insights**: Obtém os insights dos anúncios usando a ID da conta.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Método `sendWpp($text, $wpp)`
+
+Este método é responsável por enviar mensagens WhatsApp usando a API do Meta WPP.
+
+### Parâmetros
+
+- `$text`: Texto da mensagem WhatsApp.
+- `$wpp`: Número de telefone do destinatário.
+
+### Funcionalidades
+
+1. **Montagem dos Dados da Mensagem**: Monta os dados da mensagem WhatsApp.
+2. **Envio da Mensagem**: Envia a mensagem WhatsApp usando a API do Meta WPP.
+3. **Registro de Logs**: Registra informações sobre o envio da mensagem.
+
+## Dependências
+
+- **Laravel Framework**: Requer o framework Laravel para execução do comando de console.
+- **Facebook Business SDK**: Requer o SDK do Facebook Business para interação com a API do Meta Ads e Meta WPP.
+
+## Variáveis de Ambiente
+
+- `META_ADS_TOKEN`: Token de acesso para a API do Meta Ads.
+- `META_WPP_TOKEN`: Token de acesso para a API do Meta WPP.
+
+## Logs
+
+- **log-whatsapp**: Registra informações sobre o envio das mensagens WhatsApp.
+
+---
+
+Este documento descreve o funcionamento e a estrutura do comando `send:email` para envio de relatórios de anúncios do Meta Ads via e-mail e WhatsApp.
