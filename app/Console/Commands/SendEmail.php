@@ -57,7 +57,7 @@ class SendEmail extends Command
                     if (!empty($insights['data'])) {
                         $spend = $insights['data'][0]['spend'];
                         $impressoes = $insights['data'][0]['impressions'] ?? 0;
-                        $acoes = $acoes = $insights['data'][0]['actions'] ?? 0;
+                        $acoes = $insights['data'][0]['actions'] ?? 0;
                         foreach ($acoes as $action) {
                             if ($action['action_type'] === 'onsite_conversion.messaging_conversation_started_7d') {
                                 $conversations_started = $action['value'];
@@ -104,8 +104,16 @@ class SendEmail extends Command
                     } else {
                         Log::channel('log-whatsapp')->info('Data[] para o cliente' . $customer['name'] . ' ID:' . $id_meta['id_meta']);
                     }
+                    $newInsights = [
+                        'custo' => $spend,
+                        'impressoes' => $impressoes,
+                        'conversion' => $conversations_started,
+                        'post_reaction' => $actions,
+                        'data_inicio' => $data_inicio,
+                        'data_fim' => $data_fim,
+                    ];
                     $insightsDB = Anuncio::where('id_meta', $id_meta['id_meta'])->value('insights');
-                    $insightsDB[now()->format('Y/m/d')] = $insights;
+                    $insightsDB[now()->format('Y/m/d')] = $newInsights;
                     $anuncio = Anuncio::updateOrCreate(
                         [
                             'id_meta' => $id_meta['id_meta'],
