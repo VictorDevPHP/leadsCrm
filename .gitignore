@@ -13,6 +13,9 @@ Homestead.yaml
 auth.json
 npm-debug.log
 yarn-error.log
+storage/logs/
 /.fleet
 /.idea
 /.vscode
+storage/logs/laravel.log
+storage/logs/log-whatsapp.log
