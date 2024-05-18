@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c8342282f79fbde9bdb7fa11a93fbee",
+    "content-hash": "db0e8fdaae14613785ad35f291badc2a",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3724,6 +3724,76 @@
             "time": "2023-11-08T05:53:05+00:00"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
+                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
+                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "support": {
+                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
+                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/PHPCSStandards",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/jrfnl",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/php_codesniffer",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2021-04-09T00:54:41+00:00"
+        },
+        {
             "name": "symfony/clock",
             "version": "v7.0.5",
             "source": {
@@ -6288,6 +6358,52 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "wppconnect-team/wppconnect-php-client",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wppconnect-team/wppconnect-php-client.git",
+                "reference": "1c894ac3b18ab95dc376c841ea1a2d938ccdc889"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wppconnect-team/wppconnect-php-client/zipball/1c894ac3b18ab95dc376c841ea1a2d938ccdc889",
+                "reference": "1c894ac3b18ab95dc376c841ea1a2d938ccdc889",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "squizlabs/php_codesniffer": "3.6.0"
+            },
+            "type": "libr",
+            "autoload": {
+                "psr-4": {
+                    "WPPConnect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "bgastaldi"
+                }
+            ],
+            "description": "Um simples cliente PHP que proporciona acesso fácil aos endpoints do WPPConnect Server.",
+            "homepage": "https://github.com/wppconnect-team/wppconnect-php-client",
+            "keywords": [
+                "php",
+                "rest client",
+                "wppconnect"
+            ],
+            "support": {
+                "issues": "https://github.com/wppconnect-team/wppconnect-php-client/issues",
+                "source": "https://github.com/wppconnect-team/wppconnect-php-client/tree/v2.0.3"
+            },
+            "time": "2023-07-10T11:16:39+00:00"
         }
     ],
     "packages-dev": [

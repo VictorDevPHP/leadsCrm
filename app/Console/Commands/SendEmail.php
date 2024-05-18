@@ -105,12 +105,12 @@ class SendEmail extends Command
                         Log::channel('log-whatsapp')->info('Data[] para o cliente' . $customer['name'] . ' ID:' . $id_meta['id_meta']);
                     }
                     $newInsights = [
-                        'custo' => $spend,
-                        'impressoes' => $impressoes,
-                        'conversion' => $conversations_started,
-                        'post_reaction' => $actions,
-                        'data_inicio' => $data_inicio,
-                        'data_fim' => $data_fim,
+                        'custo' => $spend ?? 0,
+                        'impressoes' => $impressoes ?? 0,
+                        'conversion' => $conversations_started ?? 0,
+                        'post_reaction' => $actions ?? 0,
+                        'data_inicio' => $data_inicio ?? 0,
+                        'data_fim' => $data_fim ?? 'sem data',
                     ];
                     $insightsDB = Anuncio::where('id_meta', $id_meta['id_meta'])->value('insights');
                     $insightsDB[now()->format('Y/m/d')] = $newInsights;
@@ -128,6 +128,7 @@ class SendEmail extends Command
                 }
             }
             if (!empty($ids_meta)) {
+                sleep(3);
                 $this->sendWpp($texto_whatsapp, $customer['whatsapp']);
                 echo $texto_whatsapp . PHP_EOL;
                 echo PHP_EOL;
@@ -161,35 +162,19 @@ class SendEmail extends Command
         $insights = (new AdAccount($ad_account_id))->getInsights($fields, $params)->getResponse()->getContent();
         return $insights;
     }
-    function sendWpp($text, $wpp)
-    {
-        $data = [
-            'messaging_product' => 'whatsapp',
-            'preview_url' => false,
-            'recipient_type' => 'individual',
-            'to' => $wpp,
-            'type' => 'text',
-            'text' => [
-                'body' => $text
-            ]
-        ];
-        $headers = [
-            'Content-type: application/json',
-            'Authorization: Bearer ' . env('META_WPP_TOKEN')
-        ];
-        // Corrigido a montagem da URL usando a função `env()` para obter a variável de ambiente
-        $url = 'https://graph.facebook.com/v19.0/277957152074806/messages';
-        $data_json = json_encode($data);
+    function sendWpp(string $text, string $wpp) :array{
+        $url = 'http://localhost:3000/send-message';
+        $data = array('phone' => $wpp, 'message' => $text);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = curl_exec($ch);
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        \Log::info($response);
-        return [$http_status, $response];
+        return array('status_code' => $statusCode, 'response' => json_decode($response, true));
     }
+    
 
 }
