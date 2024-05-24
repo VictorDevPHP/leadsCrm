@@ -2,12 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\RelatorioEmail;
 use App\Models\Account;
 use App\Models\Anuncio;
 use App\Models\Customer;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 use FacebookAds\Api;
 use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Fields\AdsInsightsFields;
@@ -162,9 +160,9 @@ class SendEmail extends Command
         $insights = (new AdAccount($ad_account_id))->getInsights($fields, $params)->getResponse()->getContent();
         return $insights;
     }
-    function sendWpp(string $text, string $wpp) :array{
-        $url = 'http://localhost:3000/send-message';
-        $data = array('phone' => $wpp, 'message' => $text);
+    function sendWpp($wpp, $message){
+        $url = 'http://localhost:3000/wppconnect/sendMessage';
+        $data = array('phone' => $wpp, 'text' => $message);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
