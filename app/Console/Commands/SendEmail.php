@@ -127,7 +127,7 @@ class SendEmail extends Command
             }
             if (!empty($ids_meta)) {
                 sleep(3);
-                $this->sendWpp($texto_whatsapp, $customer['whatsapp']);
+                $this->sendWpp($customer['whatsapp'], $texto_whatsapp, 'XlWw2iQiOVic7DIeu3k4cKkvxtCyCU8eG7dSm665685ea4169b');
                 echo $texto_whatsapp . PHP_EOL;
                 echo PHP_EOL;
                 echo '---------------------------------------------------------------------------------------------------------------------------------------------------';
@@ -160,9 +160,9 @@ class SendEmail extends Command
         $insights = (new AdAccount($ad_account_id))->getInsights($fields, $params)->getResponse()->getContent();
         return $insights;
     }
-    function sendWpp($wpp, $message){
+    function sendWpp($wpp, $message, $key){
         $url = 'http://localhost:3000/wppconnect/sendMessage';
-        $data = array('phone' => $wpp, 'text' => $message);
+        $data = array('phone' => $wpp, 'text' => $message, 'key' => $key);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
