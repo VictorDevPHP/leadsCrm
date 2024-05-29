@@ -2,13 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\API\fads\GetInsights;
+use App\Http\Controllers\API\wpp\WppApi;
 use App\Models\Account;
 use App\Models\Anuncio;
 use App\Models\Customer;
 use Illuminate\Console\Command;
-use FacebookAds\Api;
-use FacebookAds\Object\AdAccount;
-use FacebookAds\Object\Fields\AdsInsightsFields;
 use Illuminate\Support\Facades\Log;
 
 class SendEmail extends Command
@@ -51,26 +50,30 @@ class SendEmail extends Command
                         }
                         $texto_whatsapp .= $saudacao . ' ' . $customer['name'] . "! 🌟 Que incrível ver os resultados dos seus anúncios Meta Ads!" . PHP_EOL;
                     }
-                    $insights = $this->getAdsInsights($id_meta['id_meta']);
+                    $insights = (new GetInsights())->getAdsInsights($id_meta['id_meta']);
                     if (!empty($insights['data'])) {
                         $spend = $insights['data'][0]['spend'];
                         $impressoes = $insights['data'][0]['impressions'] ?? 0;
                         $acoes = $insights['data'][0]['actions'] ?? 0;
-                        foreach ($acoes as $action) {
-                            if ($action['action_type'] === 'onsite_conversion.messaging_conversation_started_7d') {
-                                $conversations_started = $action['value'];
-                                break;
-                            } else {
-                                $conversations_started = 0;
+                        if (is_array($acoes)) {
+                            foreach ($acoes as $action) {
+                                if ($action['action_type'] === 'onsite_conversion.messaging_conversation_started_7d') {
+                                    $conversations_started = $action['value'];
+                                    break;
+                                } else {
+                                    $conversations_started = 0;
+                                }
                             }
-                        }
-                        foreach ($acoes as $action) {
-                            if ($action['action_type'] === 'post_reaction') {
-                                $actions = $action['value'];
-                                break;
-                            } else {
-                                $actions = 0;
+                            foreach ($acoes as $action) {
+                                if ($action['action_type'] === 'post_reaction') {
+                                    $actions = $action['value'];
+                                    break;
+                                } else {
+                                    $actions = 0;
+                                }
                             }
+                        } else {
+                            $conversations_started = 0;
                         }
                         $data_inicio = $insights['data'][0]['date_start'] ?? null;
                         $data_fim = $insights['data'][0]['date_stop'] ?? null;
@@ -127,7 +130,7 @@ class SendEmail extends Command
             }
             if (!empty($ids_meta)) {
                 sleep(3);
-                $this->sendWpp($customer['whatsapp'], $texto_whatsapp, 'XlWw2iQiOVic7DIeu3k4cKkvxtCyCU8eG7dSm665685ea4169b');
+                $response = (new WppApi())->sendMessage($customer['phone'], $texto_whatsapp, env('WPP_KEY'));
                 echo $texto_whatsapp . PHP_EOL;
                 echo PHP_EOL;
                 echo '---------------------------------------------------------------------------------------------------------------------------------------------------';
@@ -141,38 +144,4 @@ class SendEmail extends Command
             }
         }
     }
-    public function getAdsInsights($id_meta)
-    {
-        $ad_account_id = $id_meta;
-        Api::init(null, null, env('META_ADS_TOKEN'));
-        $fields = [
-            AdsInsightsFields::ACCOUNT_NAME,
-            AdsInsightsFields::IMPRESSIONS,
-            AdsInsightsFields::SPEND,
-            AdsInsightsFields::ACTIONS,
-            AdsInsightsFields::DATE_START,
-            AdsInsightsFields::DATE_STOP,
-        ];
-        $params = [
-            'date_preset' => 'yesterday',
-            'level' => 'account'
-        ];
-        $insights = (new AdAccount($ad_account_id))->getInsights($fields, $params)->getResponse()->getContent();
-        return $insights;
-    }
-    function sendWpp($wpp, $message, $key){
-        $url = 'http://localhost:3000/wppconnect/sendMessage';
-        $data = array('phone' => $wpp, 'text' => $message, 'key' => $key);
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-        $response = curl_exec($ch);
-        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        return array('status_code' => $statusCode, 'response' => json_decode($response, true));
-    }
-    
-
 }
