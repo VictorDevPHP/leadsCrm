@@ -18,3 +18,4 @@ storage/logs/
 /.idea
 /.vscode
 storage/logs/laravel.log
+bootstrap/cache/config.php
