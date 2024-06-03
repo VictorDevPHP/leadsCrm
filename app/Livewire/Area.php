@@ -1,23 +1,27 @@
 <?php
-
 namespace App\Livewire;
 
 use Livewire\Component;
 
 class Area extends Component{
-    public $content = 'customer';
-    public function render()
-    {
+    public $component = 'customer';
+    public $customer_id;
+
+    public function mount(){
+        $this->customer_id = auth()->user()->customer_id;
+    }
+
+    public function render(){
         return view('livewire.area-customer');
     }
 
     /**
      * Selects a component.
      *
-     * @param string $selected The selected component.
+     * @param string $componentSelected The componentSelected component.
      * @return void
      */
-    public function selectComponent(string $selected): void{
-        $this->content = $selected;     
+    public function selectComponent(string $componentSelected, int $id): void{
+        $this->component = $componentSelected;     
     }
 }
