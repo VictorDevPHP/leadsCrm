@@ -14,8 +14,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
         <!-- Styles -->
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
@@ -36,6 +38,23 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                <script>
+                    window.addEventListener('swal:modal', event => {
+                        let htmlContent = unescape(event.detail[0].html);
+                        Swal.fire({
+                            title: event.detail[0].title,
+                            icon: event.detail[0].icon,
+                            html: htmlContent,
+                            customClass: event.detail[0].customClass,
+                            showCloseButton: event.detail[0].showCloseButton,
+                            showCancelButton: event.detail[0].showCancelButton,
+                            showConfirmButton: event.detail[0].showConfirmButton,
+                            confirmButtonText: event.detail[0].confirmButtonText,
+                            cancelButtonText: event.detail[0].cancelButtonText,
+                            focusConfirm: true,
+                        });
+                    });
+                </script>
             </main>
         </div>
 
