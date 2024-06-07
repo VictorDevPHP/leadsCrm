@@ -14,6 +14,10 @@ class Invitation extends Model
      *
      * @var array
      */
+    protected $dates = [
+        'expires_at',
+    ];
+
     protected $fillable = [
         'email', 'token', 'expires_at', 'profile', 'customer_id',
     ];

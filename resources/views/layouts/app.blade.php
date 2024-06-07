@@ -37,7 +37,9 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @if (auth()->check())
+                    {{ $slot }}
+                @endif
                 <script>
                     window.addEventListener('swal:modal', event => {
                         let htmlContent = unescape(event.detail[0].html);
