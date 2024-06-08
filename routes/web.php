@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Area;
+use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -15,6 +16,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/user-management', UserManagement::class)->name('user-management');
     Route::get('/area-customer', Area::class)->name('area-customer');
 });
 
