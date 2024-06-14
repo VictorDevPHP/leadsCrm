@@ -44,11 +44,10 @@
                 @endif
                 <script>
                     window.addEventListener('swal:modal', event => {
-                        let htmlContent = unescape(event.detail[0].html);
                         Swal.fire({
                             title: event.detail[0].title,
                             icon: event.detail[0].icon,
-                            html: htmlContent,
+                            html: event.detail[0].html,
                             customClass: event.detail[0].customClass,
                             showCloseButton: event.detail[0].showCloseButton,
                             showCancelButton: event.detail[0].showCancelButton,
