@@ -1,53 +1,29 @@
 <div>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Usuários') }}
-        </h2>
-    </x-slot>
+    <div style="display: flex;">
+        <div style="flex: 0 0 250px; height: 100vh; background-color: #1a202c; padding: 20px; color: #a0aec0; flex-direction: column;">
+            <button class="focus:outline-none {{ $component == 'list-users' ? 'text-white border-b-2 border-blue-500' : 'text-gray-400' }}" wire:click="selectComponent('list-users', {{auth()->user()->customer_id}})">
+                <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200" style="margin: 30px 0;">
+                    <i class="fas fa-user-alt"></i>  Lista de Usuários
+                </h1>
+            </button>
+            <button class="focus:outline-none {{ $component == 'invit-users' ? 'text-white border-b-2 border-blue-500' : 'text-gray-400' }}" wire:click="selectComponent('invit-users', {{auth()->user()->customer_id}})">
+                <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200" style="margin: 30px 0;">
+                    <i class="fas fa-user-plus"></i> Convidar Usuários
+                </h1>
+            </button>
+        </div>
+        <div style="flex: 1; background-color: #111827; color: #a0aec0; padding: 20px;">
+            @switch($component)
+                @case('list-users')
+                    @livewire('Users.list-users')
+                    @break
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-x-auto">
-                <div class="w-full lg:w-5/6">
-                    <div class="bg-white shadow-md rounded my-6">
-                        <table class="min-w-max w-full table-auto">
-                            <thead>
-                                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Nome</th>
-                                    <th class="py-3 px-6 text-left">Email</th>
-                                    <th class="py-3 px-6 text-center">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-600 text-sm font-light">
-                                @foreach ($users as $user)
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                        <td class="py-3 px-6 text-left whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <span class="font-medium">{{ $user->name }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-6 text-left">
-                                            <div class="flex items-center">
-                                                <span>{{ $user->email }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-6 text-center">
-                                            <div class="flex item-center justify-center">
-                                                <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                    <button class="focus:outline-none">Editar</button>
-                                                </div>
-                                                <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                    <button class="focus:outline-none">Excluir</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                @case('invit-users')
+                    @livewire('Users.invit-users')
+                    @break
+                @default
+                    <!-- Código padrão caso nenhuma das condições anteriores seja atendida -->
+            @endswitch
         </div>
     </div>
 </div>
