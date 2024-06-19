@@ -17,7 +17,7 @@ class WppApi extends Controller
      */
     public function sendMessage(string $number, string $message, string $key): array
     {
-        $url = 'http://localhost:3000/wppconnect/sendMessage';
+        $url = env('APP_URL_WPP').'/wppconnect/sendMessage';
         $data = array('phone' => $number, 'text' => $message, 'key' => $key);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -37,7 +37,7 @@ class WppApi extends Controller
      */
     public function listSessions(): array
     {
-        $url = 'http://localhost:3000/wppconnect/listSessions';
+        $url = env('APP_URL_WPP').'/wppconnect/listSessions';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -55,7 +55,7 @@ class WppApi extends Controller
      */
     public function connect(string $sessionName): array
     {
-        $url = 'http://localhost:3000/wppconnect/connect';
+        $url = env('APP_URL_WPP').'/wppconnect/connect';
         $data = array('sessionName' => $sessionName);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
