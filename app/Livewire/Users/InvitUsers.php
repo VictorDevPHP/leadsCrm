@@ -23,6 +23,11 @@ class InvitUsers extends Component
         return view('livewire.users.invit-users');
     }
 
+    /**
+     * Submit the form and send an invitation.
+     *
+     * @return void
+     */
     public function submit()
     {
         $data = [
