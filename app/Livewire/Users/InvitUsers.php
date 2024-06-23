@@ -12,6 +12,15 @@ class InvitUsers extends Component
     public $profile;
     public $customers;
     public $client;
+    
+    /**
+     * Mount the component.
+     *
+     * This method is called when the component is being mounted.
+     * It initializes the necessary data for the component.
+     *
+     * @return void
+     */
     public function mount()
     {
         $this->customers = Customer::all();
