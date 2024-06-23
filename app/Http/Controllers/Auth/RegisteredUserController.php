@@ -13,6 +13,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller{
+    /**
+     * Create a new user registration form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\View\View
+     */
     public function create(Request $request){
         $token = $request->query('token');
         $token = explode('?', $token)[0];
@@ -36,6 +42,12 @@ class RegisteredUserController extends Controller{
     }
     
 
+    /**
+     * Store a newly created user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request){
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('profile_photos', 'public');
