@@ -27,7 +27,11 @@ class SendEmail extends Command
     protected $description = 'Command description';
 
     /**
-     * Execute the console command.
+     * Sends email to customers and updates insights in the database.
+     *
+     * This method retrieves all customers and their associated accounts. For each customer, it generates a personalized WhatsApp message containing insights about their ads. It then sends the message to the customer's phone number using the WppApi class. After sending the message, it logs the event and updates the insights in the database.
+     *
+     * @return void
      */
     public function handle()
     {
