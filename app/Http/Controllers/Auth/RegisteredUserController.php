@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller{
     /**
@@ -30,7 +29,6 @@ class RegisteredUserController extends Controller{
             $invitation->expires_at = Carbon::parse($invitation->expires_at);
         }
         if ($invitation->expires_at->isPast()) {
-            Log::error('Convite expirado em: ' . $invitation->expires_at);
             return redirect('/')->withErrors(['error' => 'Convite inválido ou expirado.']);
         }
         return view('auth.register', [
@@ -51,8 +49,9 @@ class RegisteredUserController extends Controller{
     public function store(Request $request){
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('profile_photos', 'public');
+        }else{
+            $path = null;
         }
-        \Log::info($path);
         $messages = [
             'password.confirmed' => 'A senha e a confirmação de senha não coincidem.',
         ];
@@ -63,17 +62,14 @@ class RegisteredUserController extends Controller{
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], $messages);
         $token = $request->token;
-        Log::info('Token recebido: ' . $token);
         $invitation = Invitation::where('token', $token)->first();
         if (!$invitation) {
-            Log::error('Convite não encontrado ou expirado.');
             return redirect('/')->withErrors(['error' => 'Convite inválido ou expirado.']);
         }
         if (!$invitation->expires_at instanceof Carbon) {
             $invitation->expires_at = Carbon::parse($invitation->expires_at);
         }
         if ($invitation->expires_at->isPast()) {
-            Log::error('Convite expirado em: ' . $invitation->expires_at);
             return redirect('/')->withErrors(['error' => 'Convite inválido ou expirado.']);
         }
         $user = User::create([
@@ -84,7 +80,6 @@ class RegisteredUserController extends Controller{
             'customer_id' => $request->customer_id,
             'profile_photo_path' => $path
         ]);
-        \Log::info("Usuário criado: $user");
         $invitation->delete();
         event(new Registered($user));
         return redirect(route('dashboard'));
