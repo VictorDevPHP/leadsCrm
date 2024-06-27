@@ -1,14 +1,16 @@
 <?php
 namespace App\Livewire;
 
+use App\Models\Customer;
 use Livewire\Component;
 
 class Area extends Component{
     public $component = 'customer';
     public $customer_id;
+    public $customers;
 
     public function mount(){
-        $this->customer_id = auth()->user()->customer_id;
+        $this->customer_id = auth()->user()->customer_id ? null : 'admin';
     }
 
     public function render(){
