@@ -5,11 +5,12 @@ use App\Models\Customer;
 use Livewire\Component;
 
 class Area extends Component{
-    public $component = 'customer';
+    public $component;
     public $customer_id;
     public $customers;
 
     public function mount(){
+        $this->component = (auth()->user()->profile == 'admin') ? 'listCustomers' : 'customer';
         $this->customer_id = auth()->user()->customer_id ? null : 'admin';
     }
 
