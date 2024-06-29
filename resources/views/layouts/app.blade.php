@@ -10,16 +10,19 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-            
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- Styles -->
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
+        {{-- datatales --}}
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>        
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
@@ -56,6 +59,9 @@
                             cancelButtonText: event.detail[0].cancelButtonText,
                             focusConfirm: true,
                         });
+                    });
+                    $(document).ready(function() {
+                        $('#customersTable').DataTable();
                     });
                 </script>
             </main>
