@@ -34,4 +34,5 @@ storage/framework/
 /storage/framework/sessions/.gitignore
 /storage/framework/testing/.gitignore
 /storage/framework/views/.gitignore
+/storage/*
 /public/build/assets/app-BdEmeqTF.css
