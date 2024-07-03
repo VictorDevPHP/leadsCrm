@@ -16,6 +16,9 @@
         <div class="mb-4">
             <label for="client" class="block text-gray-700">Cliente:</label>
             <select id="client" wire:model="client" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                @can('admin')
+                    <option value={{null}}>NULL</option> 
+                @endcan
                 @foreach($customers as $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                 @endforeach
