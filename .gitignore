@@ -19,6 +19,9 @@ storage/logs/
 /.vscode
 storage/logs/laravel.log
 bootstrap/cache/config.php
+public/build/manifest.json
+public/build/assets/app-BQztSsfm.css
+public/build/assets/app-DUBOuVrC.css
 storage/framework/
 /bootstrap/cache/packages.php
 /bootstrap/cache/services.php
