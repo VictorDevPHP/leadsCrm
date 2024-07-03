@@ -23,7 +23,7 @@ class InvitUsers extends Component
      */
     public function mount()
     {
-        $this->customers = Customer::all();
+        $this->customers = (auth()->user()->can('admin') == 'admin') ? Customer::all() : Customer::where('id', auth()->user()->customer_id)->get();
         $this->profile = 'user_client';
         $this->client = $this->customers->first()->id ?? null;
     }

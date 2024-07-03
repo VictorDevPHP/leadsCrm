@@ -4,15 +4,17 @@
             <label for="email" class="block text-gray-700">Email:</label>
             <input type="email" id="email" wire:model="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
         </div>
-
-        <div class="mb-4">
-            <label for="profile" class="block text-gray-700">Perfil:</label>
-            <select id="profile" wire:model="profile" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                <option value="admin">Administrador</option>
-                <option value="user_client">Usuário - Cliente</option>
-            </select>
-        </div>
-
+        @can('admin')
+            <div class="mb-4">
+                <label for="profile" class="block text-gray-700">Perfil:</label>
+                <select id="profile" wire:model="profile" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    <option value="admin">Administrador</option>
+                    <option value="user_client">Usuário - Cliente</option>
+                </select>
+            </div>
+        @else
+            <input id="profile" wire:model="profile" type="hidden" value="user_client">
+        @endcan
         <div class="mb-4">
             <label for="client" class="block text-gray-700">Cliente:</label>
             <select id="client" wire:model="client" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">

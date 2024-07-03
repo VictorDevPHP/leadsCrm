@@ -11,7 +11,7 @@ class ListUsers extends Component
 
     public function mount()
     {
-        $this->users = User::all();
+        $this->users = (auth()->user()->can('admin') == 'admin') ? User::all() : User::where('customer_id', auth()->user()->customer_id)->get();
     }
     
     public function render()
