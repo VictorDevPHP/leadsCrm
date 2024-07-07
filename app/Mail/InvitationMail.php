@@ -26,4 +26,5 @@ class InvitationMail extends Mailable
                 'url' => url('/register?token=' . $this->invitation->token.'?customer_id='.$this->invitation->customer_id.'?profile='.$this->invitation->profile),
             ]);
     }
+    
 }
