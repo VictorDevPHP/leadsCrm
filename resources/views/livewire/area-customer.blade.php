@@ -48,7 +48,7 @@
                     wire:click="selectComponent('config', {{auth()->user()->customer_id}})">
                     <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200"
                         style="margin: 30px 0;">
-                        <i class="fas fa-cogs"></i> Configurações
+                        <i class="fas fa-cogs"></i> Configurações Gemini
                     </h1>
                 </button>
                 <br>
