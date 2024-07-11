@@ -19,6 +19,10 @@ class Connect extends Component
      */
     public function mount($customer_id)
     {
+        $WppApi = new WppApi;
+        $sessions = $WppApi->listSessions();
+        $sessionName = 'session-' . Customer::where('id', $customer_id)->value('whatsapp');
+        $this->data['conected'] = in_array($sessionName, $sessions['response']);
         $this->data['customer'] = Customer::find($customer_id);
     }
     public function render()
