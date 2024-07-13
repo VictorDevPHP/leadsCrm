@@ -3,6 +3,7 @@
 namespace App\Livewire\Components;
 
 use App\Http\Controllers\API\wpp\WppApi;
+use App\Models\ConnectedSession;
 use App\Models\Customer;
 use App\Models\QRCode;
 use Livewire\Component;
@@ -11,6 +12,10 @@ class Connect extends Component
 {
     public $content;
     public $data;
+    public $sessionName;
+    protected $listeners = [
+        'checkConnection' => 'checkConnection'
+    ];
     /**
      * Mount the component.
      *
@@ -21,8 +26,8 @@ class Connect extends Component
     {
         $WppApi = new WppApi;
         $sessions = $WppApi->listSessions();
-        $sessionName = 'session-' . Customer::where('id', $customer_id)->value('whatsapp');
-        $this->data['conected'] = in_array($sessionName, $sessions['response']);
+        $this->sessionName = 'session-' . Customer::where('id', $customer_id)->value('whatsapp');
+        $this->data['conected'] = in_array($this->sessionName, $sessions['response']);
         $this->data['customer'] = Customer::find($customer_id);
     }
     public function render()
@@ -36,12 +41,13 @@ class Connect extends Component
      * @param int $customer_id The ID of the customer.
      * @return void
      */
-    public function create($customer_id){
-        $sessionName = 'session-'.Customer::where('id', $customer_id)->value('whatsapp');
-        (new WppApi)->connect($sessionName);
+    public function create($customer_id)
+    {
+        $this->sessionName = 'session-'.Customer::where('id', $customer_id)->value('whatsapp');
+        (new WppApi)->connect($this->sessionName);
         $qrCode = null;
         while (true) {
-            $qrCode = QRCode::where('session', $sessionName)->value('qrCode');
+            $qrCode = QRCode::where('session', $this->sessionName)->value('qrCode');
             if ($qrCode) {
                 break;
             }
@@ -59,8 +65,18 @@ class Connect extends Component
             'confirmButtonText' =>  'Ok',
             'cancelButtonText'  =>  'Cancelar',
             'module'            =>  'QRCode',
-            'data'              =>  $qrCode
+            'data'              =>  $qrCode,
+            'origin'            =>  'connect'
         ]);
-        QRCode::where('session', $sessionName)->delete();
+        QRCode::where('session', $this->sessionName)->delete();
+    }
+    public function checkConnection()
+    {
+        $connected = ConnectedSession::where('session_name', $this->sessionName)->value('connected');
+        if($connected == true){
+            $this->dispatch('return', [
+                'conected' => $connected,
+            ]);
+        }
     }
 }

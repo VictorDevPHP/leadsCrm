@@ -57,9 +57,24 @@
                             showConfirmButton: event.detail[0].showConfirmButton,
                             confirmButtonText: event.detail[0].confirmButtonText,
                             cancelButtonText: event.detail[0].cancelButtonText,
+                            cancelButtonText: event.detail[0].cancelButtonText,
                             focusConfirm: true,
+                            didOpen: () => {
+                                if (event.detail[0].origin == 'connect') {
+                                    intervalId =  setInterval(function() {
+                                        Livewire.dispatch('checkConnection');
+                                    }, 3000);
+                                }
+                            }
                         });
                     });
+                    window.addEventListener('return', event => {
+                        if (event.detail[0].conected) {
+                            clearInterval(intervalId);
+                            Swal.close();
+                        }
+                    });
+                    
                     $(document).ready(function() {
                         $('#customersTable').DataTable();
                     });

@@ -30,5 +30,6 @@ class Customer extends Model
         'monthly_payment',
         'type_payment',
         'budget_monthly',
+        'conected',
     ];
 }
