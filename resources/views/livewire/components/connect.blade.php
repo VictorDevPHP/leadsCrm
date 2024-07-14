@@ -1,6 +1,6 @@
 <div>
     @if ($data['conected'] == true)
-        <span wire:loading.remove wire:target="create"><i class="fab fa-whatsapp"></i> Já conectado</span>
+        @livewire('components.whatsapp-settings', ['connected' => $data['conected']])
     @else
         <div style="position: relative; min-height: 100vh;">
             <div class="d-flex justify-content-center align-items-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">

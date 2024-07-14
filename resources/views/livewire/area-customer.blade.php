@@ -48,7 +48,7 @@
                     wire:click="selectComponent('config', {{auth()->user()->customer_id}})">
                     <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200"
                         style="margin: 30px 0;">
-                        <i class="fas fa-cogs"></i> Configurações Gemini
+                        <i class="fas fa-cogs"></i> Gemini
                     </h1>
                 </button>
                 <br>
@@ -57,7 +57,7 @@
                     wire:click="selectComponent('connect', {{auth()->user()->customer_id}})">
                     <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200"
                         style="margin: 30px 0;">
-                        <i class="fas fa-plug"></i> Conectar WhatsApp
+                        <i class="fas fa-plug"></i> {{ $text_connect }}
                     </h1>
                 </button>
             </div>
