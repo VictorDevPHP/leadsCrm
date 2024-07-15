@@ -15,8 +15,8 @@ class Config extends Component
     {
         $this->customer_id = $customer_id;
         $gemIa = GeminiAI::where('customer_id', $customer_id)->first();
-        $this->instruct = $gemIa->instruct;
-        $this->active = $gemIa->active;
+        $this->instruct = $gemIa->instruct ?? '';
+        $this->active = $gemIa->active ?? false;
     }
 
     protected $rules = [
