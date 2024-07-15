@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Models\Customer;
 use App\Models\GeminiAI;
 use Livewire\Component;
 
@@ -27,15 +28,25 @@ class Config extends Component
     public function update()
     {
         $this->validate();
-
         $gemIa = GeminiAI::where('customer_id', $this->customer_id)->first();
-        $gemIa->update([
-            'instruct' => $this->instruct,
-            'active' => $this->active,
-        ]);
-
+        if ($gemIa) {
+            $gemIa->update([
+                'instruct' => $this->instruct,
+                'active' => $this->active,
+            ]);
+        } else {
+            GeminiAI::create([
+                'customer_id' => $this->customer_id,
+                'instruct' => $this->instruct,
+                'active' => $this->active,
+                'session_name' => 'session-'. Customer::where('id', $this->customer_id)->value('whatsapp'),
+            ]);
+        }
+    
         session()->flash('message', 'Configurações atualizadas com sucesso.');
     }
+    
+    
 
     public function render()
     {
