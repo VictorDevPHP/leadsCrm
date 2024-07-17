@@ -22,7 +22,7 @@ class InvitationController extends Controller
             'email' => $data['email'],
             'token' => $token,
             'profile' => $data['profile'],
-            'customer_id' => $data['customer_id'],
+            'customer_id' => !empty($data['customer_id']) ? $data['customer_id'] : null,
             'expires_at' => now()->addDays(7),
         ]);
         Mail::to($data['email'])->send(new InvitationMail($invitation));

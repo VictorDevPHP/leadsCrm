@@ -77,7 +77,7 @@ class RegisteredUserController extends Controller{
             'email' => $invitation->email,
             'password' => Hash::make($request->password),
             'profile' => $request->profile,
-            'customer_id' => $request->customer_id,
+            'customer_id' => !empty($request->customer_id) ? $request->customer_id : null,
             'profile_photo_path' => $path
         ]);
         $invitation->delete();
