@@ -64,9 +64,26 @@
                             focusConfirm: true,
                             didOpen: () => {
                                 if (event.detail[0].origin == 'connect') {
-                                    intervalId =  setInterval(function() {
-                                        Livewire.dispatch('checkConnection');
-                                    }, 3000);
+                                    let timeLeft = 53;
+                                    const countdownInterval = setInterval(() => {
+                                        Swal.update({
+                                            html: `<p>${timeLeft} segundos até o fechamento automático...</p>` + event.detail[0].html
+                                        });
+
+                                        if (timeLeft <= 0) {
+                                            clearInterval(countdownInterval);
+                                            Swal.close();
+
+                                            Swal.fire({
+                                                title: 'Tempo expirado',
+                                                icon: 'error',
+                                                html: 'O popup foi fechado automaticamente.',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        } else {
+                                            timeLeft--;
+                                        }
+                                    }, 1000);
                                 }
                             }
                         });
@@ -75,6 +92,13 @@
                         if (event.detail[0].conected) {
                             clearInterval(intervalId);
                             Swal.close();
+                            
+                            Swal.fire({
+                                title: 'Conectado',
+                                icon: 'success',
+                                html: 'WhatsApp foi conectado',
+                                confirmButtonText: 'OK'
+                            });
                         }
                     });
                     
@@ -82,6 +106,7 @@
                         $('#customersTable').DataTable();
                     });
                 </script>
+
             </main>
         </div>
 
