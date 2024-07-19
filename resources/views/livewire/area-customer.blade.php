@@ -44,6 +44,13 @@
                 </button>
                 <br>
                 <button
+                class="focus:outline-none {{ $component == 'openAi' ? 'text-white border-b-2 border-blue-500' : 'text-gray-400' }}" wire:click="selectComponent('openAi', {{auth()->user()->customer_id}})">
+                    <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200" style="margin: 30px 0;">
+                        <i class="fas fa-robot"></i> OpenAI
+                    </h1>
+                </button>
+                <br>
+                <button
                     class="focus:outline-none {{ $component == 'config' ? 'text-white border-b-2 border-blue-500' : 'text-gray-400' }}"
                     wire:click="selectComponent('config', {{auth()->user()->customer_id}})">
                     <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200"
@@ -60,6 +67,7 @@
                         <i class="fas fa-plug"></i> {{ $text_connect }}
                     </h1>
                 </button>
+                
             </div>
             <div style="flex: 1; background-color: #111827; color: #a0aec0; padding: 20px;">
                 @switch($component)
@@ -73,6 +81,10 @@
 
                     @case('connect')
                         @livewire('Components.Connect', ['customer_id' => auth()->user()->customer_id])
+                    @break
+
+                    @case('openAi')
+                        @livewire('Components.OpenAi', ['customer_id' => auth()->user()->customer_id])
                     @break
 
                     @default
