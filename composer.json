@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.9",
         "league/commonmark": "^2.4",
         "livewire/livewire": "^3.0",
+        "openai-php/client": "^0.10.1",
         "wppconnect-team/wppconnect-php-client": "^2.0"
     },
     "require-dev": {
