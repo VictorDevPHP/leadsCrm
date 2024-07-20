@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\API\OpenAI\Threads;
 
-use App\Http\Controllers\API\OpenAI\Functions\Schedule;
 use App\Http\Controllers\API\OpenAI\Functions\ToSchedeule;
 use App\Models\CustomerAssistant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use OpenAI;
 

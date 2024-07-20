@@ -46,7 +46,7 @@
                 <button
                 class="focus:outline-none {{ $component == 'openAi' ? 'text-white border-b-2 border-blue-500' : 'text-gray-400' }}" wire:click="selectComponent('openAi', {{auth()->user()->customer_id}})">
                     <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200" style="margin: 30px 0;">
-                        <i class="fas fa-robot"></i> OpenAI
+                        <i class="fas fa-robot"></i> Assistente
                     </h1>
                 </button>
                 <br>

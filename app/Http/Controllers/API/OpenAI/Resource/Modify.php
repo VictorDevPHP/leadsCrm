@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\OpenAI\Resource;
 
+use App\Http\Controllers\API\OpenAI\Services\GetKeyFunction;
 use OpenAI;
 
 class Modify
@@ -12,41 +13,28 @@ class Modify
         $this->client = OpenAI::client(env('GPT_KEY'));
     }
 
-    public function modifyAssistant(array $data, string $id_assistant): object
+    public function modifyAssistant(array $data, string $id_assistant, string $functions): object
     {
-        $response = $this->client->assistants()->modify($id_assistant, [
-            'instructions' => $data['instruct'],
-            'name' => $data['name'],
-            'model' => $data['model'],
-            'tools' => [
-                [
-                    'type' => 'function',
-                    'function' => [
-                        'name' => 'schedule_appointment',
-                        'description' => 'Function to schedule appointments in Google Calendar',
-                        'parameters' => [
-                            'type' => 'object',
-                            'properties' => [
-                                'email' => [
-                                    'type' => 'string',
-                                    'description' => 'Client email address',
-                                ],
-                                'time_interval' => [
-                                    'type' => 'string',
-                                    'description' => 'Time interval: e.g., 14:00-15:00',
-                                ],
-                                'date' => [
-                                    'type' => 'string',
-                                    'format' => 'date',
-                                    'description' => 'Appointment date in YYYY-MM-DD format: e.g., 2024-05-15',
-                                ],
-                            ],
-                            'required' => ['time_interval', 'date'],
-                        ],
+        if(!empty($functions)){
+            $response = $this->client->assistants()->modify($id_assistant, [
+                'instructions' => $data['instruct'],
+                'name' => $data['name'],
+                'model' => $data['model'],
+                'tools' => [
+                    [
+                        'type' => 'function',
+                        'function' => GetKeyFunction::getKeyByFunctionName($functions)
                     ],
                 ],
-            ],
-        ]);
+            ]);
+        }else{
+            $response = $this->client->assistants()->modify($id_assistant, [
+                'instructions' => $data['instruct'],
+                'name' => $data['name'],
+                'model' => $data['model'],
+                'tools' => [],
+            ]);
+        }
         return $response;
     }
 }

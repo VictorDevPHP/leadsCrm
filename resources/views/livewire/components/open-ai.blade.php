@@ -1,5 +1,6 @@
-<div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full mx-auto">
-    <h2 class="text-2xl font-bold mb-6 text-white">Criar Assistente OpenAI</h2>
+<div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full mx-auto">  
+    <br>
+    <h2 class="text-2xl font-bold mb-6 text-white">{{isset($assistant)? 'Atualizar Assistente:' : 'Criar Assistente:'}}</h2>
     <form wire:submit.prevent="submit">
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-300">Nome</label>
@@ -15,13 +16,22 @@
             <label for="model" class="block text-sm font-medium text-gray-300">Modelo</label>
             <select id="model" wire:model="model" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="">Selecione um modelo</option>
-                <option value="gpt-4">gpt-4</option>
-                <option value="gpt-4o">gpt-4o</option>
-                <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
-                <option value="gpt-3.5-turbo-1106">gpt-3.5-turbo-1106</option>
+                <option value="gpt-4o">Bravo (Mais avançado)</option>
+                <option value="gpt-4-1106-preview">Charlie (Moderado)</option>
+                <option value="gpt-3.5-turbo-1106">Delta (Econômico)</option>
             </select>
             @error('model') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
+        <div class="mb-4">
+            <label for="function" class="block text-sm font-medium text-gray-300">Função</label>
+            <select id="function" wire:model="selectedFunction" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select2">
+                <option value="">Selecione uma função</option>
+                @foreach($functions as $key => $function)
+                    <option @if(isset($selectedFunction) && $selectedFunction == $function['name']) @selected(true) @endif value="{{ $function['name'] }}">{{ $key }}</option>
+                @endforeach
+            </select>
+            @error('selectedFunctions') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>        
         <div class="mb-4">
             <label for="active" class="block text-sm font-medium text-gray-300">Status</label>
             <select id="active" wire:model="active" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
