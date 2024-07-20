@@ -16,14 +16,24 @@
             <select id="model" wire:model="model" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="">Selecione um modelo</option>
                 <option value="gpt-4">gpt-4</option>
+                <option value="gpt-4o">gpt-4o</option>
                 <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
                 <option value="gpt-3.5-turbo-1106">gpt-3.5-turbo-1106</option>
             </select>
             @error('model') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
+        <div class="mb-4">
+            <label for="active" class="block text-sm font-medium text-gray-300">Status</label>
+            <select id="active" wire:model="active" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="">Selecione o status</option>
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+            </select>
+            @error('active') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
         <div>
             <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                Criar Assistente
+                {{isset($assistant)? 'Atualizar Assistente' : 'Criar Assistente'}}
             </button>
         </div>
     </form>
