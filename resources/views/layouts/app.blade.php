@@ -65,7 +65,8 @@
                             didOpen: () => {
                                 if (event.detail[0].origin == 'connect') {
                                     let timeLeft = 53;
-                                    const countdownInterval = setInterval(() => {
+                                    countdownInterval = setInterval(() => {
+                                        Livewire.dispatch('checkConnection')
                                         Swal.update({
                                             html: `<p>${timeLeft} segundos até o fechamento automático...</p>` + event.detail[0].html
                                         });
@@ -90,7 +91,7 @@
                     });
                     window.addEventListener('return', event => {
                         if (event.detail[0].conected) {
-                            clearInterval(intervalId);
+                            clearInterval(countdownInterval);
                             Swal.close();
                             
                             Swal.fire({

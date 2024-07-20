@@ -25,7 +25,7 @@
         <div class="mb-4">
             <label for="function" class="block text-sm font-medium text-gray-300">Função</label>
             <select id="function" wire:model="selectedFunction" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select2">
-                <option value="">Selecione uma função</option>
+                <option value="">Sem Função</option>
                 @foreach($functions as $key => $function)
                     <option @if(isset($selectedFunction) && $selectedFunction == $function['name']) @selected(true) @endif value="{{ $function['name'] }}">{{ $key }}</option>
                 @endforeach
@@ -35,9 +35,8 @@
         <div class="mb-4">
             <label for="active" class="block text-sm font-medium text-gray-300">Status</label>
             <select id="active" wire:model="active" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <option value="">Selecione o status</option>
                 <option value="1">Ativo</option>
-                <option value="0">Inativo</option>
+                <option value="0">Desativado</option>
             </select>
             @error('active') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
