@@ -64,7 +64,7 @@
                     wire:click="selectComponent('connect', {{auth()->user()->customer_id}})">
                     <h1 class="font-semibold text-xl leading-tight hover:text-white transition-colors duration-200"
                         style="margin: 30px 0;">
-                        <i class="fas fa-plug"></i> {{ $text_connect }}
+                        <i class="fab fa-whatsapp mr-2"></i> {{ $text_connect }}
                     </h1>
                 </button>
                 
