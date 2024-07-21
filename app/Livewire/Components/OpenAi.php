@@ -4,6 +4,7 @@ namespace App\Livewire\Components;
 
 use App\Http\Controllers\API\OpenAI\Resource\{Create, Retrieve};
 use App\Http\Controllers\API\OpenAI\Resource\Modify;
+use App\Http\Controllers\API\OpenAI\Services\GetKeyFunction;
 use App\Models\Customer;
 use App\Models\CustomerAssistant;
 use Livewire\Component;
@@ -18,7 +19,7 @@ class OpenAi extends Component
     public $model;
     public $assistant;
     public $functions;
-    public $selectedFunction;
+    public $selectedFunction = [];
     protected $rules = [
         'customer_id' => 'required|exists:customers,id',
         'active' => 'required|boolean',
@@ -31,7 +32,9 @@ class OpenAi extends Component
        $this->functions = config('functions');
        if(isset($this->assistant)){
             $response = (new Retrieve())->retrieveAssistant($this->assistant->id_assistant);
-            $this->selectedFunction = $response->tools[0]['function']['name'];
+            $this->selectedFunction = array_map(function($tool) {
+                return $tool['function']['name'];
+            }, $response->tools);
             $this->name = $response->name;
             $this->instruct = $response->instructions;
             $this->model = $response->model;
@@ -48,19 +51,21 @@ class OpenAi extends Component
     public function submit()
     {
         $this->validate();
-        if(isset($this->id_assistant)){
-            $response = (new Modify())->modifyAssistant([ 
+        $functions = GetKeyFunction::getKeyByFunctionName($this->selectedFunction);
+        if (isset($this->id_assistant)) {
+            $response = (new Modify())->modifyAssistant([
                 'name' => $this->name,
                 'instruct' => $this->instruct,
                 'model' => $this->model,
-            ], $this->id_assistant, $this->selectedFunction);
-        }else{
+                'tools' => $functions
+            ], $this->id_assistant, $functions);
+        } else {
             $response = (new Create())->createAssistant([
                 'name' => $this->name,
                 'instruct' => $this->instruct,
                 'model' => $this->model,
-                'functions' => $this->selectedFunction
-            ], );
+                'tools' => $functions
+            ]);
         }
 
         CustomerAssistant::updateOrCreate(
