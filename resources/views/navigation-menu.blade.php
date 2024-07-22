@@ -13,15 +13,21 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if (auth()->check())
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" wire:navigate>
-                            {{ __('Dashboard') }}
+                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" wire:navigate.hover>
+                            <i class="fas fa-tachometer-alt mr-2"></i> {{ __('Dashboard') }}
                         </x-nav-link>
-                        <x-nav-link href="{{ route('area-customer') }}" :active="request()->routeIs('area-customer')" wire:navigate>
-                            {{auth()->user()->can('admin') ? 'Clientes' : 'Area do Cliente'}}
+                        
+                        <x-nav-link href="{{ route('area-customer') }}" :active="request()->routeIs('area-customer')" wire:navigate.hover>
+                            <i class="fas fa-users mr-2"></i> {{ auth()->user()->can('admin') ? 'Clientes' : 'Area do Cliente' }}
                         </x-nav-link>   
-                        <x-nav-link href="{{ route('user-management') }}" :active="request()->routeIs('user-management')" wire:navigate>
-                            {{ __('Usuários') }}
-                        </x-nav-link>   
+                        
+                        <x-nav-link href="{{ route('user-management') }}" :active="request()->routeIs('user-management')" wire:navigate.hover>
+                            <i class="fas fa-user-cog mr-2"></i> {{ __('Usuários') }}
+                        </x-nav-link> 
+                        
+                        <x-nav-link href="{{ route('delivery') }}" :active="request()->routeIs('delivery')" wire:navigate.hover>
+                            <i class="fas fa-shipping-fast mr-2"></i> {{ __('Delivery') }}
+                        </x-nav-link> 
                     @endif
                 </div>
             </div>

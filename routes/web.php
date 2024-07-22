@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Area;
+use App\Livewire\Delivery;
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -19,6 +20,7 @@ Route::middleware([
 
     Route::get('/user-management', UserManagement::class)->name('user-management');
     Route::get('/area-customer', Area::class)->name('area-customer');
+    Route::get('/delivery', Delivery::class)->name('delivery');
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
