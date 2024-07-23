@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\OpenAI\Threads;
 
+use App\Http\Controllers\API\OpenAI\Functions\ToDevilery;
 use App\Http\Controllers\API\OpenAI\Functions\ToSchedeule;
 use App\Models\CustomerAssistant;
 use Illuminate\Http\Request;
@@ -26,8 +27,10 @@ class Messages
         } else {
             $response = $this->client->threads()->create([]);
             Cache::put($request->number, [
+                'thread_id' => $response->id,
                 'session' => $request->session_name,
-                'thread_id' => $response->id
+                'number' => $request->number,
+                'name' => $request->name,
             ], 7 * 1440);
         }
         return Cache::get($request->number);
@@ -77,7 +80,7 @@ class Messages
                 $call_function = $runStatusResponse->requiredAction->submitToolOutputs->toolCalls[0]['id'];
                 $name_function = $runStatusResponse->requiredAction->submitToolOutputs->toolCalls[0]['function']['name'];
                 $arguments = $runStatusResponse->requiredAction->submitToolOutputs->toolCalls[0]['function']['arguments'];
-                $this->requireActions($call_function, $runId, $cache['thread_id'], $arguments, $name_function);
+                $this->requireActions($call_function, $runId, $cache['thread_id'], $arguments, $name_function, $cache);
                 
             }
 
@@ -112,11 +115,14 @@ class Messages
         return response()->json(['message' => $messageContent]);
     }
 
-    public function requireActions($call_function, $runId, $thread_id, $arguments, $name_function)
+    public function requireActions($call_function, $runId, $thread_id, $arguments, $name_function, $cache)
     {
         if($name_function == 'schedule_appointment'){
             Log::info('init schedule_appointment');
             $response = ToSchedeule::toSchedeule($arguments);
+        }elseif($name_function == 'get_delivery'){
+            Log::info("init get_delivery");
+            $response = ToDevilery::pushDelivery($arguments, $cache);
         }
 
         $stream = $this->client->threads()->runs()->submitToolOutputsStreamed(

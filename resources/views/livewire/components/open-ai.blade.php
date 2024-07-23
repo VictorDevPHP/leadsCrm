@@ -27,7 +27,8 @@
             </label>
             <select id="model" wire:model="model" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="">Selecione um modelo</option>
-                <option value="gpt-4o">Bravo (Mais avançado)</option>
+                <option value="gpt-4o">Alpha (Mais avançado)</option>
+                <option value="gpt-4o-mini">Bravo (Intermediario)</option>  
                 <option value="gpt-4-1106-preview">Charlie (Moderado)</option>
                 <option value="gpt-3.5-turbo-1106">Delta (Econômico)</option>
             </select>

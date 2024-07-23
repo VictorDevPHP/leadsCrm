@@ -11,74 +11,81 @@
                 </h2>
                 <div class="space-y-2" id="recebido-tasks">
                     @foreach ($tasks['recebido'] as $task)
-                    <div wire:click="showTaskDetails({{ $task->id }}, '{{ $task->status_kanban }}')"
-                        class="task bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        data-id="{{ $task->id }}">
-                        <p class="text-gray-600">Nº Pedido {{ $task->id }}</p>
-                        <strong class="text-blue-600">{{ $task->name_client }}</strong><br>
-                        <p class="text-gray-600">
-                            <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank" class="text-green-500 hover:underline flex items-center">
-                                <i class="fab fa-whatsapp mr-2"></i>
-                                <span class="text-black"><b>WhatsApp:</b> </span>
-                                <span class="text-green-500"> {{ $task->whatsapp }}</span>
-                            </a>
-                        </p>
-                        <p class="text-gray-600"><b>Metodo Pagamento: </b>{{ $task->metodo_pagamento }}</p>    
-                        @php
+                        <div wire:click="showTaskDetails({{ $task->id }}, '{{ $task->status_kanban }}')"
+                            class="task bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                            data-id="{{ $task->id }}">
+                            <p class="text-gray-600">Nº Pedido {{ $task->id }}</p>
+                            <strong class="text-blue-600">{{ $task->name_client }}</strong><br>
+                            <p class="text-gray-600">
+                                <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank"
+                                    class="text-green-500 hover:underline flex items-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    <span class="text-black"><b>WhatsApp:</b> </span>
+                                    <span class="text-green-500"> {{ $task->whatsapp }}</span>
+                                </a>
+                            </p>
+                            <p class="text-gray-600"><b>Metodo Pagamento: </b>{{ $task->metodo_pagamento }}</p>
+                            @php
                             $produtos = json_decode($task->description, true);
-                        @endphp
-                        @if(isset($produtos['produtos']) && is_array($produtos['produtos']))
+                            @endphp
+                            @if ($produtos)
                             <ul class="list-disc ml-5 mt-2">
-                                @foreach($produtos['produtos'] as $produto)
-                                    <li>
-                                        {{ $produto['quantidade'] }} <b>{{ $produto['nome'] }}</b>
-                                    </li>
+                                @foreach($produtos as $produto)
+                                <li>
+                                    {{ $produto['quantidade'] }} <b>{{ $produto['nome'] }}</b>
+                                </li>
                                 @endforeach
                             </ul>
-                        @endif
-                        <br>
-                        <br>
-                        <p class="text-gray-600"><b>Endereço: </b>{{ $task->endereco }}</p>
-                    </div>
+                            @else
+                            <p>Nenhum produto encontrado.</p>
+                            @endif
+                            <br>
+                            <br>
+                            <p class="text-gray-600"><b>Endereço: </b>{{ $task->endereco }}</p>
+                        </div>
                     @endforeach
                 </div>
             </div>
             <div id="em-andamento" class="flex-1 bg-gray-100 p-4 rounded-lg shadow-md task-container"
                 data-status="em andamento">
                 <h2 class="text-lg font-semibold mb-2 text-gray-700 sticky-header">
-                    <i class="fas fa-spinner fa-spin fa-lg"></i> Em Andamento
+                    <i class="fas fa-spinner fa-lg p-3"></i> Em Andamento
                 </h2>
                 <div class="space-y-2" id="em-andamento-tasks">
                     @foreach ($tasks['em andamento'] as $task)
-                    <div wire:click="showTaskDetails({{ $task->id }}, '{{ $task->status_kanban }}')"
-                        class="task bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        data-id="{{ $task->id }}">
-                        <p class="text-gray-600">Nº Pedido {{ $task->id }}</p>
-                        <strong class="text-blue-600">{{ $task->name_client }}</strong><br>
-                        <p class="text-gray-600">
-                            <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank" class="text-green-500 hover:underline flex items-center">
-                                <i class="fab fa-whatsapp mr-2"></i>
-                                <span class="text-black"><b>WhatsApp:</b> </span>
-                                <span class="text-green-500"> {{ $task->whatsapp }}</span>
-                            </a>
-                        </p>
-                        <p class="text-gray-600"><b>Metodo Pagamento: </b>{{ $task->metodo_pagamento }}</p>   
-                        @php
-                            $produtos = json_decode($task->description, true);
-                        @endphp
-                        @if(isset($produtos['produtos']) && is_array($produtos['produtos']))
+                        <div wire:click="showTaskDetails({{ $task->id }}, '{{ $task->status_kanban }}')"
+                            class="task bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                            data-id="{{ $task->id }}">
+                            <p class="text-gray-600">Nº Pedido {{ $task->id }}</p>
+                            <strong class="text-blue-600">{{ $task->name_client }}</strong><br>
+                            <p class="text-gray-600">
+                                <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank"
+                                    class="text-green-500 hover:underline flex items-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    <span class="text-black"><b>WhatsApp:</b> </span>
+                                    <span class="text-green-500"> {{ $task->whatsapp }}</span>
+                                </a>
+                            </p>
+                            <p class="text-gray-600"><b>Metodo Pagamento: </b>{{ $task->metodo_pagamento }}</p>
+                            @php
+                                $produtos = json_decode($task->description, true);
+                            @endphp
+                            @if ($produtos)
                             <ul class="list-disc ml-5 mt-2">
-                                @foreach($produtos['produtos'] as $produto)
-                                    <li>
-                                        {{ $produto['quantidade'] }} - <b>{{ $produto['nome'] }}</b>
-                                    </li>
+                                @foreach($produtos as $produto)
+                                <li>
+                                    {{ $produto['quantidade'] }} <b>{{ $produto['nome'] }}</b>
+                                </li>
                                 @endforeach
                             </ul>
-                        @endif             
-                        <br>
-                        <br>
-                        <p class="text-gray-600"><b>Endereço: </b>{{ $task->endereco }}</p>
-                    </div>
+                            @else
+                                <p>Nenhum produto encontrado.</p>
+                            @endif
+                            <br>
+                            <br>
+                            <p class="text-gray-600"><b>Endereço: </b>{{ $task->endereco }}</p>
+                            <p class="text-gray-600"><b>hora: </b>{{ $task->created_at }}</p>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -95,7 +102,8 @@
                         <p class="text-gray-600">Nº Pedido {{ $task->id }}</p>
                         <strong class="text-blue-600">{{ $task->name_client }}</strong><br>
                         <p class="text-gray-600">
-                            <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank" class="text-green-500 hover:underline flex items-center">
+                            <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank"
+                                class="text-green-500 hover:underline flex items-center">
                                 <i class="fab fa-whatsapp mr-2"></i>
                                 <span class="text-black"><b>WhatsApp:</b> </span>
                                 <span class="text-green-500"> {{ $task->whatsapp }}</span>
@@ -103,20 +111,21 @@
                         </p>
                         <p class="text-gray-600"><b>Metodo Pagamento: </b>{{ $task->metodo_pagamento }}</p>
                         @php
-                            $produtos = json_decode($task->description, true);
+                        $produtos = json_decode($task->description, true);
                         @endphp
-                        @if(isset($produtos['produtos']) && is_array($produtos['produtos']))
-                            <ul class="list-disc ml-5 mt-2">
-                                @foreach($produtos['produtos'] as $produto)
-                                    <li>
-                                        {{ $produto['quantidade'] }} - <b>{{ $produto['nome'] }}</b>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif                        
+                        @if ($produtos)
+                        <ul class="list-disc ml-5 mt-2">
+                            @foreach($produtos as $produto)
+                            <li>
+                                {{ $produto['quantidade'] }} <b>{{ $produto['nome'] }}</b>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @else
+                        <p>Nenhum produto encontrado.</p>
+                        @endif
                         <br>
                         <br>
-                        <p class="text-gray-600"><b>Endereço: </b>{{ $task->endereco }}</p>
                     </div>
                     @endforeach
                 </div>
@@ -131,30 +140,31 @@
                     <div wire:click="showTaskDetails({{ $task->id }}, '{{ $task->status_kanban }}')"
                         class="task bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out relative"
                         data-id="{{ $task->id }}">
-                    
+
                         <p class="text-gray-600">Nº Pedido {{ $task->id }}</p>
                         <strong class="text-blue-600">{{ $task->name_client }}</strong><br>
                         <p class="text-gray-600">
-                            <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank" class="text-green-500 hover:underline flex items-center">
+                            <a href="https://wa.me/{{ $task->whatsapp }}" target="_blank"
+                                class="text-green-500 hover:underline flex items-center">
                                 <i class="fab fa-whatsapp mr-2"></i>
                                 <span class="text-black"><b>WhatsApp:</b> </span>
                                 <span class="text-green-500"> {{ $task->whatsapp }}</span>
                             </a>
-                        </p>  
-                        
+                        </p>
+
                         <p class="text-gray-600"><b>Metodo Pagamento: </b>{{ $task->metodo_pagamento }}</p>
                         @php
-                            $produtos = json_decode($task->description, true);
+                        $produtos = json_decode($task->description, true);
                         @endphp
                         @if(isset($produtos['produtos']) && is_array($produtos['produtos']))
-                            <ul class="list-disc ml-5 mt-2">
-                                @foreach($produtos['produtos'] as $produto)
-                                    <li>
-                                        {{ $produto['quantidade'] }} - <b>{{ $produto['nome'] }}</b>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif                       
+                        <ul class="list-disc ml-5 mt-2">
+                            @foreach($produtos['produtos'] as $produto)
+                            <li>
+                                {{ $produto['quantidade'] }} - <b>{{ $produto['nome'] }}</b>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
                         <br>
                         <br>
                         <p class="text-gray-600"><b>Endereço: </b>{{ $task->endereco }}</p>
@@ -163,13 +173,13 @@
                             <i class="fas fa-check"></i>
                         </button>
                     </div>
-                    
+
                     @endforeach
                 </div>
             </div>
         </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
             let isDragging = false;
             let clickTimeout = null;
             let activeDropzone = null;
@@ -253,106 +263,117 @@
 
                 window.dragMoveListener = dragMoveListener;
             });
-    </script>
-    <style>
-        .task-container {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-width: 250px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 16px;
-            transition: flex 0.3s ease, box-shadow 0.3s ease;
-            overflow: visible;
-        }
-        .task.dragging {
+        </script>
+        <style>
+            .task-container {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                min-width: 250px;
+                background: #f8f9fa;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 16px;
+                transition: flex 0.3s ease, box-shadow 0.3s ease;
+                overflow: visible;
+            }
+
+            .task.dragging {
                 z-index: 1000;
                 position: absolute;
                 transform: translate3d(0, 0, 0);
             }
-        .task {
-            -webkit-user-drag: none;
-            user-drag: none;
-            border: 1px solid #d1d5db;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
-            cursor: grab;
-            padding: 12px;
-            user-select: none;
-            position: relative;
-            overflow: hidden;
-        }
-        .task button {
-            position: absolute;
-            bottom: 10px;
-            right: 10px; 
-            background-color: #3b82f6;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .task:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            transform: scale(1.03);
-        }
-        .task:active {
-            cursor: grabbing;
-        }
-        .task strong {
-            color: #2563eb;
-            font-size: 1.2rem;
-            display: block;
-            margin-bottom: 8px;
-        }
 
-        .task p {
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
-        h2 {
-            display: flex;
-            align-items: center;
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 16px;
-        }
-        h2 i {
-            margin-right: 8px;
-            color: #3b82f6;
-            font-size: 1.2rem;
-        }
-        .spinner-container {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 9999;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        .task:active,
-        .task:active * {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-        .sticky-header {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            background: #f8f9fa;
-            z-index: 1;
-            padding: 16px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-    </style>
+            .task {
+                -webkit-user-drag: none;
+                user-drag: none;
+                border: 1px solid #d1d5db;
+                background: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+                cursor: grab;
+                padding: 12px;
+                user-select: none;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .task button {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background-color: #3b82f6;
+                color: #ffffff;
+                border: 2px solid #ffffff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .task:hover {
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+                transform: scale(1.03);
+            }
+
+            .task:active {
+                cursor: grabbing;
+            }
+
+            .task strong {
+                color: #2563eb;
+                font-size: 1.2rem;
+                display: block;
+                margin-bottom: 8px;
+            }
+
+            .task p {
+                color: #6b7280;
+                font-size: 0.95rem;
+            }
+
+            h2 {
+                display: flex;
+                align-items: center;
+                font-size: 1.125rem;
+                font-weight: 600;
+                color: #374151;
+                margin-bottom: 16px;
+            }
+
+            h2 i {
+                margin-right: 8px;
+                color: #3b82f6;
+                font-size: 1.2rem;
+            }
+
+            .spinner-container {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 9999;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 0.5rem;
+                padding: 1rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .task:active,
+            .task:active * {
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+
+            .sticky-header {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                background: #f8f9fa;
+                z-index: 1;
+                padding: 16px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+        </style>
 
 
-</div>
+    </div>

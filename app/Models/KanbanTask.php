@@ -14,5 +14,8 @@ class KanbanTask extends Model
         'description',
         'session_name',
         'status_kanban',
+        'endereco',
+        'metodo_pagamento',
+        'whatsapp',
     ];
 }

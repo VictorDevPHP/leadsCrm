@@ -42,5 +42,29 @@ return [
             ],
             "required" => ["location"]
         ]
+    ],
+
+    'atendente de pedidos' => [
+        "name" => "get_delivery",
+        "description" => "obtains the data necessary to place a delivery order",
+        "parameters" => [
+            "type" => "object",
+            "properties" => [
+                "products" => [
+                    "type" => "string",
+                    "description" => 'exemplo de um pedido [{"nome": "MADERO VEGGIE", "quantidade": 1}, {"nome": "FRANGO GRELHADO", "quantidade": 1}, {"nome": "Água sem gás", "quantidade": 2}]'
+                ],
+                "address" => [
+                    "type" => "string",
+                    "description" => "written address or google location"
+                ],
+                "payment_method" => [
+                    "type" => "string",
+                    "description" => "payment method that the customer will use as credit, debit or pix"
+                ]
+                
+            ],
+            "required" => ["address", "products", "payment_method"]
+        ]
     ]
 ];

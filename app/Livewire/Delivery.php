@@ -21,13 +21,28 @@ class Delivery extends Component
     public function loadTasks()
     {
         $this->tasks = [
-            'recebido' => KanbanTask::where('status_kanban', 'recebido')->where('session_name', 'session-'.$this->customer->whatsapp)->get(),
-            'em andamento' => KanbanTask::where('status_kanban', 'em andamento')->where('session_name', 'session-'.$this->customer->whatsapp)->get(),
-            'finalizado' => KanbanTask::where('status_kanban', 'finalizado')->where('session_name', 'session-'.$this->customer->whatsapp)->get(),
-            'saiu para entrega' => KanbanTask::where('status_kanban', 'saiu para entrega')->where('session_name', 'session-'.$this->customer->whatsapp)->get(),
+            'recebido' => KanbanTask::where('status_kanban', 'recebido')
+                ->where('session_name', 'session-'.$this->customer->whatsapp)
+                ->orderBy('id', 'desc')
+                ->get(),
+    
+            'em andamento' => KanbanTask::where('status_kanban', 'em andamento')
+                ->where('session_name', 'session-'.$this->customer->whatsapp)
+                ->orderBy('id', 'desc')
+                ->get(),
+    
+            'finalizado' => KanbanTask::where('status_kanban', 'finalizado')
+                ->where('session_name', 'session-'.$this->customer->whatsapp)
+                ->orderBy('id', 'desc')
+                ->get(),
+    
+            'saiu para entrega' => KanbanTask::where('status_kanban', 'saiu para entrega')
+                ->where('session_name', 'session-'.$this->customer->whatsapp)
+                ->orderBy('id', 'desc')
+                ->get(),
         ];
-        sleep(0.5);
     }
+    
 
     public function taskDropped($taskId, $newStatus)
     {

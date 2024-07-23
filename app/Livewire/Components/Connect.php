@@ -14,7 +14,8 @@ class Connect extends Component
     public $data;
     public $sessionName;
     protected $listeners = [
-        'checkConnection' => 'checkConnection'
+        'checkConnection' => 'checkConnection',
+        'reloadComponent' => 'reload'
     ];
     /**
      * Mount the component.
@@ -24,10 +25,8 @@ class Connect extends Component
      */
     public function mount($customer_id)
     {
-        $WppApi = new WppApi;
-        $sessions = $WppApi->listSessions();
         $this->sessionName = 'session-' . Customer::where('id', $customer_id)->value('whatsapp');
-        $this->data['conected'] = in_array($this->sessionName, $sessions['response']);
+        $this->data['conected'] = ConnectedSession::where('session_name', $this->sessionName)->value('connected');
         $this->data['customer'] = Customer::find($customer_id);
     }
     public function render()
@@ -78,5 +77,10 @@ class Connect extends Component
                 'conected' => $connected,
             ]);
         }
+    }
+
+    public function reload()
+    {
+        $this->data['conected'] = true;
     }
 }
