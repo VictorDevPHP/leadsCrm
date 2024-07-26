@@ -4,7 +4,7 @@
         <i class="fas fa-robot mr-2"></i>{{isset($assistant)? 'Atualizar Assistente:' : 'Criar Assistente:'}}
     </h2>
     <div class="absolute top-0 right-0 mt-2 mr-2">
-        <span class="status-indicator {{ $active ? 'bg-green-500' : 'bg-red-500' }}"></span>
+        <span>Status </span><span class="status-indicator {{ $active ? 'bg-green-500' : 'bg-red-500' }}"></span>
     </div>
     <form wire:submit.prevent="submit">
         <div class="mb-4">

@@ -71,4 +71,31 @@ class WppApi extends Controller
         curl_close($ch);
         return array('status_code' => $statusCode, 'response' => json_decode($response, true));
     }
+
+    /**
+     * Disconnect a session from the WPPConnect service.
+     *
+     * This function sends a POST request to the WPPConnect service to disconnect a session.
+     *
+     * @param string $session The session identifier to be disconnected.
+     * @return array An array containing the status code and response from the WPPConnect service.
+     *
+     * @throws \Exception If the curl request fails or if the response cannot be decoded.
+     */
+    public static function disconect(string $session): array
+    {
+        $url = env('APP_URL_WPP') . '/wppconnect/disconect';
+        $data = array('session' => $session);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $response = curl_exec($ch);
+        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        \Log::info($response);
+        return array('status_code' => $statusCode, 'response' => json_decode($response, true));
+        
+    }
 }

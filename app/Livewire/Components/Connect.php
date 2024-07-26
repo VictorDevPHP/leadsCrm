@@ -6,6 +6,7 @@ use App\Http\Controllers\API\wpp\WppApi;
 use App\Models\ConnectedSession;
 use App\Models\Customer;
 use App\Models\QRCode;
+use App\Services\CustomerService;
 use Livewire\Component;
 
 class Connect extends Component
@@ -25,7 +26,7 @@ class Connect extends Component
      */
     public function mount($customer_id)
     {
-        $this->sessionName = 'session-' . Customer::where('id', $customer_id)->value('whatsapp');
+        $this->sessionName = CustomerService::getSessionCustomer($customer_id);
         $this->data['conected'] = ConnectedSession::where('session_name', $this->sessionName)->value('connected');
         $this->data['customer'] = Customer::find($customer_id);
     }
