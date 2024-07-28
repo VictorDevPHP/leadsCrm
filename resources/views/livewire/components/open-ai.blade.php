@@ -1,5 +1,5 @@
 <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full mx-auto relative">  
-    <br>
+    <br> 
     <h2 class="text-2xl font-bold mb-6 text-white">
         <i class="fas fa-robot mr-2"></i>{{isset($assistant)? 'Atualizar Assistente:' : 'Criar Assistente:'}}
     </h2>
