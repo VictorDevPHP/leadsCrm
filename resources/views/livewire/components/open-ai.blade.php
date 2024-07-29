@@ -8,7 +8,7 @@
     </div>
     <form wire:submit.prevent="submit">
         <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-300">
+            <label for="name" class="block text-sm font-medium text-gray-300"> 
                 <i class="fas fa-user mr-2"></i>Nome:
             </label>
             <input type="text" id="name" wire:model="name" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
