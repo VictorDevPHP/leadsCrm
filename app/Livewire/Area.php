@@ -27,7 +27,7 @@ class Area extends Component{
     }
 
     /**
-     * Selects a component.
+     * Selects a component. 
      *
      * @param string $componentSelected The componentSelected component.
      * @return void
