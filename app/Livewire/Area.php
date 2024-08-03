@@ -33,6 +33,6 @@ class Area extends Component{
      * @return void
      */
     public function selectComponent(string $componentSelected, int $id): void{
-        $this->component = $componentSelected;     
+        $this->component = $componentSelected;      
     }
 }
