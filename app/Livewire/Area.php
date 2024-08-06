@@ -15,11 +15,7 @@ class Area extends Component{
         $this->component = (auth()->user()->profile == 'admin') ? 'listCustomers' : 'customer';
         $this->customer_id = auth()->user()->customer_id ? null : 'admin';
         $wpp_connected = ConnectedSession::where('session_name', 'session-'.Customer::where('id', $this->customer_id)->value('whatsapp'));
-        if($wpp_connected == true){
-            $this->text_connect = 'WhatsApp';
-        }else{
-            $this->text_connect = 'Conectar WhatsApp';
-        }
+        $this->text_connect = ($wpp_connected == true) ? 'WhatsApp' : 'Conectar WhatsApp';
     }
 
     public function render(){
